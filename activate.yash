@@ -1,3 +1,6 @@
+# TODO: 45 line VIRTUAL_ENV
+# TODO: 53 line VIRTUAL_ENV_PROMPT
+
 # This file must be used with ". bin/activate" from yash of non-POSIXly-correct mode in Linux
 # you cannot run it directly
 
@@ -39,7 +42,7 @@ deactivate () {
 
 deactivate nondestructive
 
-VIRTUAL_ENV=/home/logarius/.local/share/virtualenvs/zq-gect-CjVunslc
+VIRTUAL_ENV= #TODO
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
@@ -47,7 +50,7 @@ PATH="$VIRTUAL_ENV/"bin":$PATH"
 export PATH
 
 if [ "x"zq-gect != x ] ; then
-  VIRTUAL_ENV_PROMPT=zq-gect
+  VIRTUAL_ENV_PROMPT= #TODO
 else
   VIRTUAL_ENV_PROMPT=$(basename "$VIRTUAL_ENV")
 fi
