@@ -1,0 +1,30 @@
+config set shell spellcheck-enabled false
+
+config set shell prompt {
+  ${id -u} == 0 -> if {
+    ("{CSI}38;2;57;87;86m{CSI}48;2;197;104;104m  {CSI}0m")
+  }
+
+  if {
+    env -> grep "^VIRTUAL_ENV_PROMPT="
+  } then {
+    ("{CSI}38;2;57;87;86m{CSI}48;2;238;180;179m$VIRTUAL_ENV_PROMPT  {CSI}0m")
+    ("{CSI}38;2;238;180;179m{CSI}0m")
+  }
+
+  ("{CSI}38;2;31;111;139m{CSI}48;2;245;173;146m$USER  {CSI}0m")
+  ("{CSI}38;2;245;173;146m{CSI}0m")
+
+  set pwdEcho = ""
+  if { $PWD != $HOME } then {
+    a $PWD -> regexp "s-$HOME/?--" -> set pwdEcho
+  }
+
+  ("{CSI}38;2;238;180;179m{CSI}48;2;31;111;139m$pwdEcho  {CSI}0m")
+  ("{CSI}38;2;31;111;139m{CSI}0m")
+}
+
+export VIRTUAL_ENV_DISABLE_PROMPT = 1
+
+alias l-ls = exec g
+

@@ -1,0 +1,60 @@
+# TODO: 7 line VIRTUAL_ENV
+# TODO: 12 line VIRTUAL_ENV_PROMPT
+
+# This file must be used with "source ./activate.mx" *from murex*
+# you cannot run it directly
+
+export VIRTUAL_ENV =  # TODO
+
+global paths _old_virtual_path = $PATH
+export PATH = "$(VIRTUAL_ENV)/bin:$(PATH)"
+
+export VIRTUAL_ENV_PROMPT =  # TODO
+
+global str _old_virtual_pythonhome
+if { env -> grep "^PYTHONHOME=" } then {
+  _old_virtual_pythonhome = $PYTHONHOME
+  !export PYTHONHOME
+}
+
+private _old_prompt ${config get shell prompt}
+global bool venv_disable_prompt = true
+
+if {
+  or \
+  { env -> grep "^VIRTUAL_ENV_DISABLE_PROMPT=" -> ! } \
+  { $VIRTUAL_ENV_DISABLE_PROMPT == '' }
+} then {
+  venv_disable_prompt = false
+  config set shell prompt {
+    ("$VIRTUAL_ENV_PROMPT")
+    (" ")
+    _old_prompt
+  }
+}
+
+alias pydoc = python -m pydoc
+
+function deactivate {
+  !alias pydoc
+
+  if { $_old_virtual_path } then {
+    export PATH = $_old_virtual_path
+  }
+
+  if { $_old_virtual_pythonhome } then {
+    export PYTHONHOME = $_old_virtual_pythonhome
+  }
+
+  if { $venv_disable_prompt -> ! } then {
+    config set shell prompt {
+      ${_old_prompt}
+    }
+  }
+
+  !export VIRTUAL_ENV
+  !export VIRTUAL_ENV_PROMPT
+
+  !function deactivate
+}
+
